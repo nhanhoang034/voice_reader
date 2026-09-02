@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pymupdf
+edge-tts
+docx2pdf
+pywin32
+python-multipart
