@@ -26,7 +26,7 @@ export class AudioPlayer {
     async prefetch(index, text, voice) {
         if (this.cache.has(index)) return;
         try {
-            const res = await fetch("http://127.0.0.1:8000/api/tts", {
+            const res = await fetch("/api/tts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text, voice })
@@ -49,7 +49,7 @@ export class AudioPlayer {
         if (!audioUrl) {
             if (onLoadingStart) onLoadingStart();
             try {
-                const res = await fetch("http://127.0.0.1:8000/api/tts", {
+                const res = await fetch("/api/tts", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ text, voice })
