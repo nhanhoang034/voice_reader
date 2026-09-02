@@ -1,6 +1,8 @@
+import os
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from pdf_service import extract_and_clean_pdf
@@ -47,6 +49,11 @@ async def generate_speech_endpoint(req: TTSRequest):
         return StreamingResponse(audio_stream, media_type="audio/mpeg")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# Mount thư mục frontend để hiển thị giao diện web trực tiếp tại trang chủ
+frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../frontend"))
+if os.path.exists(frontend_path):
+    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
 
 if __name__ == "__main__":
     import uvicorn
