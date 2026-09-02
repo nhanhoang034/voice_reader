@@ -27,7 +27,7 @@ let isPlaying = false;
 let pdfDoc = null;
 let currentFileType = 'pdf';
 let currentVoice = "vi-VN-HoaiMyNeural";
-let currentSpeed = "1.25";
+let currentSpeed = "1.0";
 
 // Bản đồ tra cứu nhanh vị trí span cho trang PDF hiện tại
 let pdfSpanSentenceMap = new Map();
@@ -148,7 +148,14 @@ function onDocumentLoaded() {
     setPlayState(false);
     hideLoading();
     currentIndex = 0;
-    if (sentenceItems.length > 0) highlightSentence(sentenceItems[0].text, 0);
+    if (sentenceItems.length > 0) {
+        highlightSentence(sentenceItems[0].text, 0);
+        
+        // TẢI TRƯỚC 5 CÂU ĐẦU TIÊN NGAY KHI VỪA MỞ TÀI LIỆU
+        for (let i = 0; i < Math.min(5, sentenceItems.length); i++) {
+            player.prefetch(i, sentenceItems[i].text, currentVoice);
+        }
+    }
 }
 
 function startPlaybackFrom(index) {
@@ -234,7 +241,9 @@ async function playSentence(index) {
     }
 
     highlightSentence(item.text, index);
-    for (let i = 1; i <= 2; i++) {
+    
+    // TĂNG PREFETCH LÊN 5 CÂU KẾ TIẾP ĐỂ KHẮC PHỤC ĐỘ TRỄ MẠNG TRÊN RENDER
+    for (let i = 1; i <= 5; i++) {
         if (index + i < sentenceItems.length) {
             player.prefetch(index + i, sentenceItems[index + i].text, currentVoice);
         }
