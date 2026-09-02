@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình Đọc Tài Liệu Song Ngữ Tự Nhiên</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+    <div class="app-layout" id="appLayout">
+        <!-- Cột bên trái: Hiển thị PDF / Word cuộn -->
+        <div class="pdf-panel" id="pdfPanel">
+            <div id="pdfViewerContainer" class="pdf-viewer-container">
+                <div class="empty-placeholder">Chưa tải tệp nào</div>
+            </div>
+        </div>
+
+        <!-- Cột bên phải: Bảng điều khiển -->
+        <div class="control-panel" id="controlPanel">
+            <div class="panel-header">
+                <h1>🎧 Doc Voice Reader</h1>
+            </div>
+
+            <div class="upload-section">
+                <label class="file-label">Chọn tài liệu (PDF, Word):</label>
+                <input type="file" id="pdfFile" accept=".pdf, .docx, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            </div>
+
+            <div class="settings-group">
+                <div class="setting-item">
+                    <label>Giọng đọc:</label>
+                    <div class="custom-select" id="customVoiceSelect">
+                        <div class="select-selected" id="voiceSelectedLabel">Nữ - Vie</div>
+                        <div class="select-items select-hide" id="voiceOptions">
+                            <div data-value="vi-VN-HoaiMyNeural" class="same-as-selected">Nữ - Vie</div>
+                            <div data-value="vi-VN-NamMinhNeural">Nam - Vie</div>
+                            <div data-value="en-US-AriaNeural">Female - Eng</div>
+                            <div data-value="en-US-GuyNeural">Male - Eng</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <label>Tốc độ:</label>
+                    <div class="custom-select" id="customSpeedSelect">
+                        <div class="select-selected" id="speedSelectedLabel">1.25x</div>
+                        <div class="select-items select-hide" id="speedOptions">
+                            <div data-value="0.25">0.25x</div>
+                            <div data-value="0.5">0.5x</div>
+                            <div data-value="0.75">0.75x</div>
+                            <div data-value="1">1.0x</div>
+                            <div data-value="1.25" class="same-as-selected">1.25x</div>
+                            <div data-value="1.5">1.5x</div>
+                            <div data-value="1.75">1.75x</div>
+                            <div data-value="2">2.0x</div>
+                            <div data-value="2.5">2.5x</div>
+                            <div data-value="3">3.0x</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="btnRead" class="btn-primary" disabled>▶ Đọc</button>
+                <button id="btnStop" class="btn-secondary" disabled>⏹ Dừng</button>
+            </div>
+
+            <!-- Thanh chuyển trang (Tự ẩn khi đọc file Word) -->
+            <div class="pagination-bar" id="paginationBar">
+                <button id="btnPrevPage" disabled>◀ Trước</button>
+                <div class="page-input-group">
+                    <input type="number" id="pageNumberInput" min="1" value="1" disabled />
+                    <span id="pageCountLabel">/ 0</span>
+                </div>
+                <button id="btnNextPage" disabled>Sau ▶</button>
+            </div>
+
+            <div id="loadingIndicator" class="loading-bar-container" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

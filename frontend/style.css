@@ -1,1 +1,441 @@
+* {
+    box-sizing: border-box;
+}
 
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #0f172a;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-layout {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    padding: 12px;
+    gap: 12px;
+}
+
+/* 1. KHUNG HIỂN THỊ TÀI LIỆU */
+.pdf-panel {
+    flex: 1;
+    height: 100%;
+    background-color: #1e293b;
+    border-radius: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    padding: 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.pdf-viewer-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+.empty-placeholder {
+    width: 100%;
+    max-width: 600px;
+    height: 80vh;
+    border: 2px dashed #475569;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.02);
+    color: #94a3b8;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* 2. BẢNG ĐIỀU KHIỂN */
+.control-panel {
+    flex: 0 0 320px;
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    overflow-y: auto;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #f8fafc;
+    padding: 10px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+}
+
+.file-label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #475569;
+    text-align: center;
+}
+
+.upload-section input[type="file"] {
+    width: 100%;
+    font-size: 0.85rem;
+}
+
+/* 3. CÀI ĐẶT & CUSTOM DROPDOWN */
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.setting-item label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #334155;
+    min-width: 70px;
+    flex-shrink: 0;
+}
+
+.custom-select {
+    position: relative;
+    user-select: none;
+    font-size: 0.9rem;
+    flex: 1;
+}
+
+.select-selected {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.select-selected:after {
+    content: "▼";
+    font-size: 0.65rem;
+    color: #64748b;
+    transition: transform 0.2s;
+    margin-left: 6px;
+}
+
+.select-selected.select-arrow-active:after {
+    transform: rotate(180deg);
+}
+
+.select-items {
+    position: absolute;
+    background-color: #ffffff;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    margin-top: 4px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.select-items div {
+    color: #1e293b;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.select-items div:last-child {
+    border-bottom: none;
+}
+
+.select-items div:hover {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.select-items .same-as-selected {
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.select-items::-webkit-scrollbar {
+    width: 6px;
+}
+.select-items::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+.select-items::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.select-items::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.select-hide {
+    display: none;
+}
+
+/* 4. NÚT ĐIỀU KHIỂN & CHUYỂN TRANG */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: 0.2s;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.btn-secondary {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: #dc2626;
+}
+
+button:disabled {
+    background-color: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 7px 10px;
+    background: #f1f5f9;
+    border-radius: 8px;
+}
+
+.pagination-bar button {
+    flex: initial;
+    padding: 7px 12px;
+    font-size: 0.85rem;
+    background-color: #ffffff;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+}
+
+.pagination-bar button:hover:not(:disabled) {
+    background-color: #e2e8f0;
+}
+
+.page-input-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.page-input-group input {
+    width: 46px;
+    padding: 4px;
+    text-align: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* 5. LOADING SPINNER */
+.loading-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+    margin-top: 6px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    border: 20px solid #e2e8f0;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* 6. PDF RENDER & HIGHLIGHT LAYER */
+.page-wrapper {
+    position: relative;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.45);
+    background-color: white;
+    margin-bottom: 0;
+}
+
+.textLayer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    opacity: 1;
+    line-height: 1.0;
+    pointer-events: auto;
+}
+
+.textLayer span {
+    color: transparent !important;
+    position: absolute;
+    white-space: pre;
+    cursor: pointer;
+    transform-origin: 0% 0%;
+}
+
+.textLayer span:hover {
+    background-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Tô màu nền vàng mờ đè chính xác lên dòng chữ canvas phía dưới */
+.textLayer span.active-highlight,
+.textLayer .active-highlight {
+    background-color: #fde047 !important;
+    opacity: 0.55 !important;
+    border-radius: 2px;
+}
+
+/* 7. HIỂN THỊ CUỘN WORD (DOCX) */
+.docx-wrapper {
+    width: 100%;
+    max-width: 820px;
+    background: white;
+    min-height: 90vh;
+    padding: 40px 50px;
+    border-radius: 8px;
+    margin: 20px auto;
+}
+
+.docx-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 12px 0;
+}
+
+.docxTextLayer {
+    position: relative !important;
+    color: #1e293b !important;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    cursor: pointer;
+}
+
+.docxTextLayer p,
+.docxTextLayer span,
+.docxTextLayer strong,
+.docxTextLayer em {
+    color: inherit;
+}
+
+/* Tắt trạng thái hover nền xanh toàn khối thẻ đoạn văn */
+.docxTextLayer p:hover {
+    background-color: transparent !important;
+}
+
+/* Khi có bọc thẻ câu độc lập */
+.docx-sentence {
+    cursor: pointer !important;
+    border-radius: 2px;
+    transition: background-color 0.15s ease;
+    display: inline;
+}
+
+.docx-sentence:hover {
+    background-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Tô vàng khi câu đang được đọc qua TTS */
+mark.active-highlight,
+.docxTextLayer mark.active-highlight,
+.docx-sentence.active-highlight {
+    background-color: #fde047 !important;
+    color: #0f172a !important;
+    border-radius: 3px;
+    padding: 1px 0;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
