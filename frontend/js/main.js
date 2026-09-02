@@ -104,7 +104,7 @@ pdfFileInput.addEventListener('change', async (e) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const endpoint = isDocx ? "http://127.0.0.1:8000/api/extract-docx" : "http://127.0.0.1:8000/api/extract-pdf";
+    const endpoint = isDocx ? "/api/extract-docx" : "/api/extract-pdf";
 
     try {
         const response = await fetch(endpoint, { method: "POST", body: formData });
